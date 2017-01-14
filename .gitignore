@@ -1,0 +1,8 @@
+*secret*
+*.note.txt
+todo.*
+*.env
+.vscode
+node_modules
+**/server/www
+**/assets/ext

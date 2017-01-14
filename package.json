@@ -1,0 +1,52 @@
+{
+  "name": "midas-cloud",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "init": "npm run init_global && npm run init_project",
+    "init_project": "npm install && npm run init_server",
+    "init_server": "cd server && npm install && cd ..",
+    "init_global": "npm install -g typescript typings webpack",
+    "start": "node server/server.js",
+    "deploy": "webpack && npm start"
+  },
+  "dependencies": {
+    "@angular/common": "^2.1.2",
+    "@angular/compiler": "^2.1.2",
+    "@angular/core": "^2.1.2",
+    "@angular/forms": "^2.1.2",
+    "@angular/http": "^2.1.2",
+    "@angular/material": "^2.0.0-alpha.11-3",
+    "@angular/platform-browser": "^2.1.2",
+    "@angular/platform-browser-dynamic": "^2.1.2",
+    "@angular/router": "^3.1.2",
+    "@ngrx/core": "github:ngrx/core",
+    "@ngrx/effects": "^2.0.0",
+    "@ngrx/router-store": "^1.2.5",
+    "@ngrx/store": "^2.2.1",
+    "@ngrx/store-devtools": "^3.2.2",
+    "angular2-template-loader": "^0.6.0",
+    "awesome-typescript-loader": "^2.2.4",
+    "core-js": "^2.4.1",
+    "css-loader": "^0.25.0",
+    "extract-text-webpack-plugin": "^1.0.1",
+    "file-loader": "^0.9.0",
+    "hammerjs": "^2.0.8",
+    "html-loader": "^0.4.4",
+    "html-webpack-plugin": "^2.24.1",
+    "raw-loader": "^0.5.1",
+    "reflect-metadata": "^0.1.8",
+    "rxjs": "^5.0.0-rc.5",
+    "style-loader": "^0.13.1",
+    "webpack": "^1.13.3",
+    "zone.js": "^0.6.26"
+  },
+  "devDependencies": {
+    "@types/chai": "^3.4.34",
+    "@types/core-js": "^0.9.34",
+    "@types/hammerjs": "^2.0.33",
+    "@types/node": "^6.0.46",
+    "ngrx-store-freeze": "^0.1.4",
+    "typescript": "^2.2.0-dev.20161113"
+  }
+}

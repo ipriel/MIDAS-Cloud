@@ -1,0 +1,147 @@
+@import '~@angular/material/core/theming/prebuilt/deeppurple-amber.css';
+
+@font-face {
+  font-family: 'Material Icons';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Material Icons'), local('MaterialIcons-Regular'), url(https://fonts.gstatic.com/s/materialicons/v19/2fcrYFNaTjcS6g4U3t-Y5ZjZjT5FdEJ140U2DJYC3mY.woff2) format('woff2');
+}
+
+.material-icons {
+  font-family: 'Material Icons';
+  font-weight: normal;
+  font-style: normal;
+  font-size: 24px;
+  line-height: 1;
+  letter-spacing: normal;
+  text-transform: none;
+  display: inline-block;
+  white-space: nowrap;
+  word-wrap: normal;
+  direction: ltr;
+  -webkit-font-feature-settings: 'liga';
+  -webkit-font-smoothing: antialiased;
+}
+
+.app-content {
+  padding: 20px;
+}
+
+.app-content md-card {
+  margin: 20px;
+}
+
+.app-sidenav {
+  padding: 10px;
+  min-width: 100px;
+}
+
+.app-content md-checkbox {
+  margin: 10px;
+}
+
+.app-toolbar-filler {
+  flex: 1 1 auto;
+}
+
+.app-toolbar-menu {
+  padding: 0 14px 0 14px;
+  color: white;
+}
+
+.app-icon-button {
+  box-shadow: none;
+  user-select: none;
+  background: none;
+  border: none;
+  cursor: pointer;
+  filter: none;
+  font-weight: normal;
+  height: auto;
+  line-height: inherit;
+  margin: 0;
+  min-width: 0;
+  padding: 0;
+  text-align: left;
+  text-decoration: none;
+}
+
+.app-action {
+  display: inline-block;
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+}
+
+.app-spinner {
+  height: 30px;
+  width: 30px;
+  display: inline-block;
+}
+
+.app-input-icon {
+  font-size: 16px;
+}
+
+.app-list {
+  border: 1px solid rgba(0,0,0,0.12);
+  width: 350px;
+  margin: 20px;
+}
+
+.app-progress {
+  margin: 20px;
+}
+
+[md-card-video] {
+  width: calc(100% + 48px);
+  margin: 0 -24px 16px -24px;
+}
+
+[md-card-xl-video] {
+  width: 240px;
+  height: 240px;
+  margin: -8px;
+}
+
+[md-card-sm-video] {
+  margin: -8px 0;
+  width: 80px;
+  height: 80px;
+}
+
+[md-card-md-video] {
+  margin: -8px 0;
+  width: 112px;
+  height: 112px;
+}
+
+[md-card-lg-video] {
+  margin: -8px 0;
+  width: 152px;
+  height: 152px;
+}
+
+@media (max-width: 600px) {
+  [md-card-video] {
+    width: calc(100% + 32px);
+    margin: 16px -16px;
+  }
+
+  [md-card-xl-video] {
+    margin-left: 0;
+    margin-right: 0;
+  }
+}
+
+[md-card-video]:first-child {
+  margin-top: -24px;
+}
+
+md-card > [md-card-xl-video]:first-child {
+  margin-top: -8px;
+}
+
+md-card > [md-card-xl-video]:last-child {
+  margin-bottom: -8px;
+}
