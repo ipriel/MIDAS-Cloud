@@ -8,7 +8,7 @@ import { storeFreeze } from 'ngrx-store-freeze';
 import { combineReducers } from '@ngrx/store';
 import { RouterState, routerReducer } from '@ngrx/router-store';
 
-import {authReducer, AuthBase, State as AuthState } from './auth/auth.store';
+import { State as AuthState, authReducer } from './auth';
 
 export interface State {
   auth: AuthState;
@@ -30,16 +30,4 @@ export function reducer(state: any, action: any) {
   else {
     return productionReducer(state, action);
   }
-}
-
-export class AuthStore {
-  private static getState = function (state$: Observable<State>) {
-    return state$.select(state => state.auth);
-  }
-
-  static getToken = compose(AuthBase.getToken, AuthStore.getState);
-
-  static getStatus = compose(AuthBase.getStatus, AuthStore.getState);
-
-  static getError = compose(AuthBase.getError, AuthStore.getState);
 }

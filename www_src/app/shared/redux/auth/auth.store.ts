@@ -38,17 +38,3 @@ export function authReducer (state = initialState, action: Actions): State {
     }
   }
 }
-
-export class AuthBase {
-  static getToken = function(state$: Observable<State>) {
-    return state$.select(state => state.token);
-  }
-
-  static getStatus = function(state$: Observable<State>) {
-    return state$.select(state => state.authenticated);
-  }
-
-  static getError = function(state$: Observable<State>) {
-    return state$.select(state => state.err);
-  }
-}
