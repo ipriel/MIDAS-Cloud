@@ -5,6 +5,15 @@ import '@angular/core';
 import '@angular/common';
 import '@angular/http';
 import '@angular/router';
+import '@angular/material';
+
+// ngRx
+import '@ngrx/effects';
+import '@ngrx/store';
+import '@ngrx/core';
+import '@ngrx/core/src/add/operator/select';
+import '@ngrx/router-store';
+import 'ngrx-store-freeze';
 
 // RxJS
 import 'rxjs';
