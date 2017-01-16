@@ -1,0 +1,8 @@
+<h1 md-dialog-title>Confirm Delete</h1>
+<md-dialog-content>
+    <p md-line>Are you sure you want to delete {{ name }}?</p>
+</md-dialog-content>
+<md-dialog-actions>
+    <button md-raised-button (click)="dialogRef.close(true)">Yes</button>
+    <button md-raised-button (click)="dialogRef.close(false)">No</button>
+</md-dialog-actions>

@@ -1,0 +1,32 @@
+<md-card>
+    <md-card-title>Device Name</md-card-title>
+    <md-card-content>
+        <p md-line>{{mirror.name}}</p>
+        <form>
+            <md-input placeholder="Name" [(ngModel)]="mirror.name" name="name" style="width: 100%"></md-input>
+        </form>
+    </md-card-content>
+    <md-card-actions>
+        <button md-raised-button (click)="changeName()">Change Name</button>
+    </md-card-actions>
+</md-card>
+<md-card>
+    <md-card-title>Linked Services</md-card-title>
+    <md-card-content>
+        <form>
+            <md-select placeholder="Services" [(ngModel)]="selectedService" name="services">
+                <md-option *ngFor="let service of services" [value]="service.id">
+                    {{service.name}}
+                </md-option>
+            </md-select>
+        </form>
+        <button md-raised-button (click)="addService()">Add Service</button>
+        <md-list>
+            <md-list-item *ngFor="let service of mirror.services">
+                <h4 md-line>{{service.name}}</h4>
+                <p md-line class="secondary-text">Paired to: {{service.mirror}}</p>
+                <button md-raised-button (click)="removeService(device)">Remove</button>
+            </md-list-item>
+        </md-list>
+    </md-card-content>
+</md-card>

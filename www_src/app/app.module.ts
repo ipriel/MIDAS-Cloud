@@ -12,6 +12,10 @@ import { routes, reducer } from './shared'
 import { AppComponent } from './app.component';
 import { NavComponent } from './nav/nav.component';
 import { LoginComponent } from './login/login.component';
+import { MainComponent } from './main/main.component';
+import { MirrorDialogComponent } from './mirror_dialog/mirror_dialog.component';
+import { ConfirmDialogComponent } from './confirm_dialog/confirm_dialog.component';
+import { DetailsComponent } from './details/details.component';
 
 @NgModule({
   imports: [
@@ -26,7 +30,15 @@ import { LoginComponent } from './login/login.component';
   declarations: [
     AppComponent,
     NavComponent,
-    LoginComponent
+    LoginComponent,
+    MainComponent,
+    MirrorDialogComponent,
+    ConfirmDialogComponent,
+    DetailsComponent
+  ],
+  entryComponents: [
+    MirrorDialogComponent,
+    ConfirmDialogComponent
   ],
   bootstrap: [AppComponent]
 })

@@ -8,7 +8,6 @@ module.exports = function(app, rootDir) {
 
     // Catch all requests for assets (js, css, etc.)
     app.get('*.*$', function(req, res) {
-        console.log(req.path);
         res.sendFile(path.join(rootDir, 'www', req.path));
     });
 

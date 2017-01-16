@@ -1,0 +1,11 @@
+<h1 md-dialog-title>Add Mirror</h1>
+<md-dialog-content>
+    <form>
+        <md-input placeholder="Name" [(ngModel)]="mirror.name" name="name" style="width: 100%"></md-input>
+        <md-input placeholder="Serial" [(ngModel)]="mirror.serial" name="serial" style="width: 100%"></md-input>
+    </form>
+</md-dialog-content>
+<md-dialog-actions>
+    <button md-raised-button md-dialog-close>Cancel</button>
+    <button md-raised-button (click)="dialogRef.close(mirror)">Save</button>
+</md-dialog-actions>

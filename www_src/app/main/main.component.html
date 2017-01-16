@@ -1,0 +1,26 @@
+<md-card>
+    <md-card-title>MIDAS Devices</md-card-title>
+    <md-card-content>
+        <button md-raised-button (click)="addMirror()"><md-icon>add</md-icon>Add Mirror</button>
+        <md-list>
+            <md-list-item *ngFor="let mirror of mirrors">
+                <h4 md-line>{{mirror.name}}</h4>
+                <p md-line class="secondary-text">{{mirror.serial}} </p>
+                <button md-raised-button (click)="removeMirror(mirror)">Edit</button>
+                <button md-raised-button (click)="removeMirror(mirror)">Remove</button>
+            </md-list-item>
+        </md-list>
+    </md-card-content>
+</md-card>
+<md-card>
+    <md-card-title>Paired Devices</md-card-title>
+    <md-card-content>
+        <md-list>
+            <md-list-item *ngFor="let device of devices">
+                <h4 md-line>{{device.name}}</h4>
+                <p md-line class="secondary-text">Paired to: {{device.mirror}}</p>
+                <button md-raised-button (click)="pairDevice(device)">Confirm</button>
+            </md-list-item>
+        </md-list>
+    </md-card-content>
+</md-card>

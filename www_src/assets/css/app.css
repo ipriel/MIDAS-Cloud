@@ -23,6 +23,10 @@
   -webkit-font-smoothing: antialiased;
 }
 
+.secondary-text {
+  color: rgba(0, 0, 0, 0.54);
+}
+
 .app-content {
   padding: 20px;
 }

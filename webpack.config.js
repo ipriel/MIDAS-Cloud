@@ -65,9 +65,9 @@ module.exports = {
     new ExtractTextPlugin('styles/[name].css'),
 
     new HtmlWebpackPlugin({
-            title: 'e-lation',
+            title: 'MIDAS WebConsole',
             template: './www_src/index.ejs',
-            appMountId: 'el-app',
+            appMountId: 'mwc-app',
             filename: 'index.html',
             minify: {
                 caseSensitive: true,
