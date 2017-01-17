@@ -40,6 +40,11 @@ module.exports = {
         loader: 'file?name=fonts/[name].[ext]'
       },
       {
+        test: /\.js.map$/,
+        exclude: /(bootstrap)/,
+        loader: 'file?name=[name].[ext]'
+      },
+      {
         test: /\.(png|jpe?g|gif|svg|ico)$/,
         exclude: /(bootstrap)/,
         loader: 'file?name=assets/[name].[ext]'

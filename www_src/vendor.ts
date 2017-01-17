@@ -21,5 +21,8 @@ import 'rxjs';
 // Material theme
 import './assets/sass/theme.scss';
 
+// Code Maps
+import 'rxjs/scheduler/AnimationFrameScheduler.js.map';
+
 // Other vendors for example jQuery or Lodash
 // You can import js, ts, css, sass, ...
