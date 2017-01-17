@@ -18,5 +18,8 @@ import 'ngrx-store-freeze';
 // RxJS
 import 'rxjs';
 
+// Material theme
+import './assets/sass/theme.scss';
+
 // Other vendors for example jQuery or Lodash
 // You can import js, ts, css, sass, ...

@@ -1,0 +1,14 @@
+@import '~@angular/material/core/theming/_all-theme.scss';
+
+// Include non-theme styles for core.
+@include md-core();
+
+// Define a theme.
+$primary: md-palette($md-blue-grey, 700, 500, 900);
+$accent:  md-palette($md-indigo, 800, 700, 900);
+$warn: md-palette($md-red, 900, 800, 900);
+
+$theme: md-light-theme($primary, $accent, $warn);
+
+// Include all theme styles for the components.
+@include angular-material-theme($theme);

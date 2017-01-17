@@ -45,6 +45,10 @@ module.exports = {
         loader: 'file?name=assets/[name].[ext]'
       },
       {
+        test: /\.scss$/,
+        loader: ExtractTextPlugin.extract('style', 'css?sourceMap!sass?sourceMap')
+      },
+      {
         test: /\.css$/,
         exclude: resolvePath('www_src', 'app'),
         loader: ExtractTextPlugin.extract('style', 'css?sourceMap')
