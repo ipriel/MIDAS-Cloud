@@ -7,7 +7,8 @@ import { ActionTypes as AuthActions } from '../shared/redux/auth'
 
 @Component({
     selector: 'mwc-nav',
-    templateUrl: './nav.component.html'
+    templateUrl: './nav.component.html',
+    styleUrls: ['./nav.component.css']
 })
 export class NavComponent {
     store: Store<State>;

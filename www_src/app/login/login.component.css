@@ -6,3 +6,28 @@
   left: 50%;
   transform: translate(-50%, -50%);
 }
+
+.background {
+  position: absolute;
+  top: 64px;
+  bottom: 0px;
+  left: 0px;
+  right: 0px;
+  background-image: url("/assets/background.jpg");
+  background-color: #cccccc;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: cover;
+}
+
+@media (max-width:600px) and (orientation:portrait) {
+  .background {
+    top: 56px;
+  }
+}
+
+@media (max-width:960px) and (orientation:landscape) {
+  .background {
+    top: 48px;
+  }
+}
