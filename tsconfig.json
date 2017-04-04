@@ -1,6 +1,7 @@
 {
   "compilerOptions": {
     "target": "es5",
+    "lib": ["es5", "es2015", "es6"],
     "module": "commonjs",
     "moduleResolution": "node",
     "allowJs": true,
@@ -10,6 +11,6 @@
     "removeComments": false,
     "noImplicitAny": false,
     "suppressImplicitAnyIndexErrors": true,
-    "types": [ "hammerjs" ]
+    "types": [ "core-js", "hammerjs", "underscore" ]
   }
 }

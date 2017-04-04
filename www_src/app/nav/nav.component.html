@@ -4,6 +4,5 @@
     MIDAS WebConsole
 
     <span class="app-toolbar-filler"></span>
-    <a md-button routerLink="/Logout" *ngIf="(authenticated | async)">Logout</a>
-    <button md-button (click)="login()" *ngIf="!(authenticated | async)">Login</button>
+    <button md-button (click)="logout()" *ngIf="(authenticated | async)">Logout</button>
 </md-toolbar>

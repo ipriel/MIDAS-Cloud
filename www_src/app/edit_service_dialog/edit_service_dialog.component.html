@@ -1,0 +1,12 @@
+<h1 md-dialog-title>Edit Service</h1>
+<md-dialog-content>
+    <h4>{{service.name}}</h4>
+    <p>{{service.type}}</p>
+    <form>
+        <md-input *ngFor="let setting of service.settings" [placeholder]="setting.name" [(ngModel)]="setting.val" name="val" style="width: 100%"></md-input>
+    </form>
+</md-dialog-content>
+<md-dialog-actions>
+    <button md-raised-button md-dialog-close>Cancel</button>
+    <button md-raised-button (click)="dialogRef.close(service)">Save</button>
+</md-dialog-actions>

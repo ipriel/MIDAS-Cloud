@@ -1,13 +1,23 @@
 <md-card>
-    <md-card-title>Device Name</md-card-title>
     <md-card-content>
-        <p md-line>{{mirror.name}}</p>
+        <button md-raised-button (click)="goBack()">Back</button>
+    </md-card-content>
+</md-card>
+<md-card>
+    <md-card-title>Device Name</md-card-title>
+    <md-card-content *ngIf="!editMirror">
+        <p>Name: <span>{{(mirror | async)?.name}}</span></p>
+        <p>Serial Number: <span>{{(mirror | async)?.sn}}</span></p>
+    </md-card-content>
+    <md-card-content *ngIf="editMirror">
         <form>
-            <md-input placeholder="Name" [(ngModel)]="mirror.name" name="name" style="width: 100%"></md-input>
+            <md-input placeholder="Name" [ngModel]="(mirror | async)?.name" (ngModelChange)="nameChange($event)" name="name" style="width: 100%"></md-input>
+            <md-input placeholder="Serial Number" [ngModel]="(mirror | async)?.sn" (ngModelChange)="snChange($event)" name="sn" style="width: 100%"></md-input>
         </form>
     </md-card-content>
     <md-card-actions>
-        <button md-raised-button (click)="changeName()">Change Name</button>
+        <button md-raised-button (click)="editMirror = !editMirror" *ngIf="!editMirror">Change Name/SN</button>
+        <button md-raised-button (click)="saveMirror()" *ngIf="editMirror">Save Changes</button>
     </md-card-actions>
 </md-card>
 <md-card>
@@ -15,17 +25,17 @@
     <md-card-content>
         <form>
             <md-select placeholder="Services" [(ngModel)]="selectedService" name="services">
-                <md-option *ngFor="let service of services" [value]="service.id">
+                <md-option *ngFor="let service of services | async | resolve:(mirror | async).services:false" [value]="service">
                     {{service.name}}
                 </md-option>
             </md-select>
         </form>
-        <button md-raised-button (click)="addService()">Add Service</button>
+        <button md-raised-button (click)="linkService()">Link Service</button>
         <md-list>
-            <md-list-item *ngFor="let service of mirror.services">
+            <md-list-item *ngFor="let service of services | resolve:(mirror | async).services:true">
                 <h4 md-line>{{service.name}}</h4>
-                <p md-line class="secondary-text">Paired to: {{service.mirror}}</p>
-                <button md-raised-button (click)="removeService(device)">Remove</button>
+                <p md-line class="secondary-text">Type:<span> {{service.type}}</span></p>
+                <button md-raised-button (click)="unlinkService(service)">Unlink</button>
             </md-list-item>
         </md-list>
     </md-card-content>

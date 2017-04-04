@@ -1,0 +1,16 @@
+<h1 md-dialog-title>Add Service</h1>
+<md-dialog-content>
+    <form>
+        <md-input placeholder="Name" [(ngModel)]="service.name" name="name" style="width: 100%"></md-input>
+        <md-select placeholder="Type" [(ngModel)]="service.type" (change)="typeChanged()" name="types">
+            <md-option *ngFor="let type of serviceTypes | async" [value]="type">
+                {{type}}
+            </md-option>
+        </md-select>
+        <md-input *ngFor="let setting of settings" [placeholder]="setting.name" [(ngModel)]="setting.val" name="val" style="width: 100%"></md-input>
+    </form>
+</md-dialog-content>
+<md-dialog-actions>
+    <button md-raised-button md-dialog-close>Cancel</button>
+    <button md-raised-button (click)="close(service)">Save</button>
+</md-dialog-actions>

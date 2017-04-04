@@ -1,0 +1,24 @@
+<md-card>
+    <md-card-content>
+        <button md-raised-button (click)="goBack()">Back</button>
+    </md-card-content>
+</md-card>
+<md-card>
+    <md-card-title>New Mirror</md-card-title>
+    <md-card-content *ngIf="exists | async">
+        <h4>The mirror already exists!</h4>
+        <p>Name: <span>{{(mirror | async)?.name}}</span></p>
+        <p>Serial Number: <span>{{(mirror | async)?.sn}}</span></p>
+    </md-card-content>
+    <md-card-content *ngIf="!(exists | async)">
+        <h4>Choose a name for your new mirror</h4>
+        <p class="secondary-text">Serial Number: <span>{{newMirror?.sn}}</span></p>
+        <form>
+            <md-input placeholder="Name" [(ngModel)]="newMirror.name" name="name" style="width: 100%"></md-input>
+        </form>
+    </md-card-content>
+    <md-card-actions>
+        <button md-raised-button (click)="goBack()" *ngIf="exists | async">Cancel</button>
+        <button md-raised-button (click)="saveMirror()" *ngIf="!(exists | async)">Save</button>
+    </md-card-actions>
+</md-card>

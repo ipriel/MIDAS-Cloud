@@ -2,44 +2,65 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { MdDialogRef, MdDialog } from '@angular/material';
 import { ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
+import { go } from '@ngrx/router-store';
 import { Observable } from 'rxjs/Observable';
+import { Subscription } from 'rxjs/Subscription';
 
-import { State } from '../shared/redux'
-import { ActionTypes as AuthActions } from '../shared/redux/auth'
+import { State } from '../shared/redux';
+import { ActionTypes as UserActions } from '../shared/redux/user';
 
-import { MirrorDialogComponent } from '../mirror_dialog/mirror_dialog.component'
-import { ConfirmDialogComponent } from '../confirm_dialog/confirm_dialog.component'
+import { ConfirmDialogComponent } from '../confirm_dialog/confirm_dialog.component';
+import { NewServiceDialogComponent } from '../new_service_dialog/new_service_dialog.component';
 
 @Component({
     templateUrl: './details.component.html'
 })
 export class DetailsComponent {
-    mirrorDialogRef: MdDialogRef<MirrorDialogComponent>;
     confirmDialogRef: MdDialogRef<ConfirmDialogComponent>;
-    mirror: any;
-    sub: any;
-    id: any;
+    newServiceDialogRef: MdDialogRef<NewServiceDialogComponent>;
+    mirror: Observable<Mirror>;
+    newMirror: Mirror;
+    services: Observable<Array<Service>>;
+    selectedService: Service;
+    editMirror: Boolean;
+    sub: Subscription;
+    id: ObjectId;
 
-    constructor(public store$: Store<State>, public dialog: MdDialog, private route: ActivatedRoute) { }
+    constructor(private store$: Store<State>, public dialog: MdDialog, private route: ActivatedRoute) {
+        this.services = store$.select(state => state.user.services);
+    }
 
-    removeService(service: any) {
-        this.confirmDialogRef = this.dialog.open(ConfirmDialogComponent, {
-            disableClose: false
-        });
-        this.confirmDialogRef.componentInstance.name = service.name;
+    nameChange(newValue: String) {
+        this.newMirror.name = newValue;
+    }
 
-        this.confirmDialogRef.afterClosed().subscribe(result => {
-            if (result) {
-                //dispatch("REM_SVC" {id: service.id})
-            }
-            this.confirmDialogRef = null;
-        });
+    snChange(newValue: String) {
+        this.newMirror.sn = newValue;
+    }
+
+    saveMirror() {
+        this.newMirror._id = this.id;
+        this.store$.dispatch({type: UserActions.EDIT_MIRROR, payload: this.newMirror});
+        this.editMirror = !this.editMirror;
+        this.newMirror = {};
+    }
+
+    linkService() {
+        this.store$.dispatch({type: UserActions.LINK_SVC, payload: {parentId: this.id, child: this.selectedService}});
+    }
+
+    unlinkService(service: Service) {
+        this.store$.dispatch({type: UserActions.UNLINK_SVC, payload: {parentId: this.id, child: service}});
+    }
+
+    goBack() {
+        this.store$.dispatch(go("main"));
     }
 
     ngOnInit() {
         this.sub = this.route.params.subscribe(params => {
             this.id = +params['id'];
-            //store.select(mirrors[this.id]).subscribe(mirror => this.mirror = mirror)
+            this.mirror = this.store$.select(state => state.user.mirrors.find(mirror => mirror._id === this.id));
         });
     }
 

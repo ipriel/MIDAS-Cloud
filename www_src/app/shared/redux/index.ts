@@ -9,14 +9,20 @@ import { combineReducers } from '@ngrx/store';
 import { RouterState, routerReducer } from '@ngrx/router-store';
 
 import { State as AuthState, authReducer } from './auth';
+import { State as UserState, userReducer } from './user';
+
+export { AuthEffects } from './auth';
+export { UserEffects } from './user';
 
 export interface State {
   auth: AuthState;
+  user: UserState;
   router: RouterState;
 }
 
 const reducers = {
   auth: authReducer,
+  user: userReducer,
   router: routerReducer,
 };
 

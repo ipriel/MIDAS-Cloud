@@ -1,13 +1,16 @@
 import { Component } from '@angular/core';
 import { MdDialogRef, MdDialog } from '@angular/material';
 import { Store } from '@ngrx/store';
+import { go } from '@ngrx/router-store';
 import { Observable } from 'rxjs/Observable';
 
-import { State } from '../shared/redux'
-import { ActionTypes as AuthActions } from '../shared/redux/auth'
+import { State } from '../shared/redux';
+import { ActionTypes as UserActions } from '../shared/redux/user';
 
-import { MirrorDialogComponent } from '../mirror_dialog/mirror_dialog.component'
-import { ConfirmDialogComponent } from '../confirm_dialog/confirm_dialog.component'
+import { MirrorDialogComponent } from '../mirror_dialog/mirror_dialog.component';
+import { ConfirmDialogComponent } from '../confirm_dialog/confirm_dialog.component';
+import { NewServiceDialogComponent } from '../new_service_dialog/new_service_dialog.component';
+import { EditServiceDialogComponent } from '../edit_service_dialog/edit_service_dialog.component';
 
 @Component({
     templateUrl: './main.component.html'
@@ -15,18 +18,29 @@ import { ConfirmDialogComponent } from '../confirm_dialog/confirm_dialog.compone
 export class MainComponent {
     mirrorDialogRef: MdDialogRef<MirrorDialogComponent>;
     confirmDialogRef: MdDialogRef<ConfirmDialogComponent>;
-    store: Store<State>;
-    mirrors: Array<any>;
-    devices: Array<any>;
+    newServiceDialogRef: MdDialogRef<NewServiceDialogComponent>;
+    editServiceDialogRef: MdDialogRef<EditServiceDialogComponent>;
+    mirrors: Observable<Array<Mirror>>;
+    devices: Observable<Array<Device>>;
+    services: Observable<Array<Service>>;
 
     constructor(private store$: Store<State>, public dialog: MdDialog) {
-        this.store = store$;
-        this.mirrors = [{ name: "Bathroom", serial: "0032A" }, { name: "Hall", serial: "0468A" }];
-        this.devices = [{ name: "Itamar's Phone", mirror: "Bathroom", mac: "987" }, { name: "Itamar's Tablet", mirror: "Bathroom", mac: "325" }];
+        this.mirrors = store$.select(state => state.user.mirrors);
+        this.devices = store$.select(state => state.user.devices);
+        this.services = store$.select(state => state.user.services);
+        //Dev
+        store$.dispatch({type: UserActions.ADD_MIRROR, payload: { name: "Bathroom", _id: "0032A" }});
+        store$.dispatch({type: UserActions.ADD_MIRROR, payload: { name: "Hall", _id: "0468A" }});
+        store$.dispatch({type: UserActions.ADD_DEVICE, payload: { _id: 8, name: "Itamar's Phone", paired: false }});
+        store$.dispatch({type: UserActions.ADD_DEVICE, payload: { _id: 9, name: "Itamar's Tablet", paired: false }});
     }
 
-    pairDevice(device: any) {
-        alert("Confirmed:\nName: " + device.name + "\nMirror: " + device.mirror + "\nMac: " + device.mac);
+    pairDevice(device: Device) {
+        this.store$.dispatch({type: UserActions.CONFIRM_PAIR, payload: device._id});
+    }
+
+    depairDevice(device: Device) {
+        this.store$.dispatch({type: UserActions.DEPAIR_DEVICE, payload: device._id});
     }
 
     addMirror() {
@@ -36,12 +50,17 @@ export class MainComponent {
 
         this.mirrorDialogRef.afterClosed().subscribe(result => {
             if (typeof result !== "undefined") {
-                this.mirrors.push(result);
+                this.store$.dispatch({type: UserActions.ADD_MIRROR, payload: result});
             }
+            this.mirrorDialogRef = null;
         });
     }
 
-    removeMirror(mirror: any) {
+    editMirror(mirror: Mirror) {
+        this.store$.dispatch(go("details/" + mirror._id));
+    }
+
+    removeMirror(mirror: Mirror) {
         this.confirmDialogRef = this.dialog.open(ConfirmDialogComponent, {
             disableClose: false
         });
@@ -49,8 +68,48 @@ export class MainComponent {
 
         this.confirmDialogRef.afterClosed().subscribe(result => {
             if (result) {
-                var index = this.mirrors.indexOf(mirror);
-                this.mirrors.splice(index, 1);
+                this.store$.dispatch({type: UserActions.REM_MIRROR, payload: mirror._id});
+            }
+            this.confirmDialogRef = null;
+        });
+    }
+
+    addService() {
+        this.newServiceDialogRef = this.dialog.open(NewServiceDialogComponent, {
+            disableClose: false
+        });
+
+        this.newServiceDialogRef.afterClosed().subscribe(result => {
+            if (typeof result !== "undefined") {
+                this.store$.dispatch({type: UserActions.ADD_SVC, payload: result});
+            }
+            this.newServiceDialogRef = null;
+        });
+    }
+
+    editService(service: Service) {
+        this.editServiceDialogRef = this.dialog.open(EditServiceDialogComponent, {
+            disableClose: false
+        });
+        this.editServiceDialogRef.componentInstance.service = service;
+
+        this.editServiceDialogRef.afterClosed().subscribe(result => {
+            if (typeof result !== "undefined") {
+                this.store$.dispatch({type: UserActions.EDIT_SVC, payload: result});
+            }
+            this.editServiceDialogRef = null;
+        });
+    }
+
+    removeService(service: Service) {
+        this.confirmDialogRef = this.dialog.open(ConfirmDialogComponent, {
+            disableClose: false
+        });
+        this.confirmDialogRef.componentInstance.name = service.name;
+
+        this.confirmDialogRef.afterClosed().subscribe(result => {
+            if (result) {
+                this.store$.dispatch({type: UserActions.REM_SVC, payload: service._id});
             }
             this.confirmDialogRef = null;
         });

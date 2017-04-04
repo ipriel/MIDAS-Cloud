@@ -3,10 +3,10 @@
     <md-card-content>
         <button md-raised-button (click)="addMirror()"><md-icon>add</md-icon>Add Mirror</button>
         <md-list>
-            <md-list-item *ngFor="let mirror of mirrors">
+            <md-list-item *ngFor="let mirror of mirrors | async">
                 <h4 md-line>{{mirror.name}}</h4>
-                <p md-line class="secondary-text">{{mirror.serial}} </p>
-                <button md-raised-button (click)="removeMirror(mirror)">Edit</button>
+                <p md-line class="secondary-text">{{mirror.sn}} </p>
+                <button md-raised-button (click)="editMirror(mirror)">Edit</button>
                 <button md-raised-button (click)="removeMirror(mirror)">Remove</button>
             </md-list-item>
         </md-list>
@@ -16,10 +16,25 @@
     <md-card-title>Paired Devices</md-card-title>
     <md-card-content>
         <md-list>
-            <md-list-item *ngFor="let device of devices">
+            <md-list-item *ngFor="let device of devices | async">
                 <h4 md-line>{{device.name}}</h4>
-                <p md-line class="secondary-text">Paired to: {{device.mirror}}</p>
-                <button md-raised-button (click)="pairDevice(device)">Confirm</button>
+                <p md-line class="secondary-text">Status: <span>{{device.paired?'Paired':'Not Paired'}}</span></p>
+                <button md-raised-button (click)="pairDevice(device)" *ngIf="!device.paired">Confirm</button>
+                <button md-raised-button (click)="depairDevice(device)" *ngIf="device.paired">Delete</button>
+            </md-list-item>
+        </md-list>
+    </md-card-content>
+</md-card>
+<md-card>
+    <md-card-title>Services</md-card-title>
+    <md-card-content>
+        <button md-raised-button (click)="addService()"><md-icon>add</md-icon>Add Service</button>
+        <md-list>
+            <md-list-item *ngFor="let service of services | async">
+                <h4 md-line>{{service.name}}</h4>
+                <p md-line class="secondary-text">Type:<span> {{service.type}}</span></p>
+                <button md-raised-button (click)="editService(mirror)">Edit</button>
+                <button md-raised-button (click)="removeService(mirror)">Remove</button>
             </md-list-item>
         </md-list>
     </md-card-content>

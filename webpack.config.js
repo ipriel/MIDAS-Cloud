@@ -1,5 +1,6 @@
 var webpack = require('webpack');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
+var HtmlWebpackExternalsPlugin = require('html-webpack-externals-plugin');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
 var path = require('path');
 
@@ -36,13 +37,12 @@ module.exports = {
         loader: 'html'
       },
       {
-        test: /\.(svg|woff|woff2|ttf|eot)$/,
-        loader: 'file?name=fonts/[name].[ext]'
+        test: /\.js.map$/,
+        loader: 'file?name=[name].[ext]'
       },
       {
-        test: /\.js.map$/,
-        exclude: /(bootstrap)/,
-        loader: 'file?name=[name].[ext]'
+        test: /\.(svg|woff|woff2|ttf|eot)$/,
+        loader: 'file?name=fonts/[name].[ext]'
       },
       {
         test: /\.(png|jpe?g|gif|svg|ico)$/,
@@ -74,17 +74,32 @@ module.exports = {
     new ExtractTextPlugin('styles/[name].css'),
 
     new HtmlWebpackPlugin({
-            title: 'MIDAS WebConsole',
-            template: './www_src/index.ejs',
-            appMountId: 'mwc-app',
-            filename: 'index.html',
-            minify: {
-                caseSensitive: true,
-                keepClosingSlash: true,
-                collapseWhitespace: true,
-                conservativeCollapse: true,
-                preserveLineBreaks: true
-            }
-        })
+      title: 'MIDAS WebConsole',
+      template: './www_src/index.ejs',
+      appMountId: 'mwc-app',
+      filename: 'index.html',
+      minify: {
+        caseSensitive: true,
+        keepClosingSlash: true,
+        collapseWhitespace: true,
+        conservativeCollapse: true,
+        preserveLineBreaks: true
+      }
+    }),
+
+    new HtmlWebpackExternalsPlugin([
+      {
+        name: 'facebook',
+        url: 'https://connect.facebook.net/en_US/sdk.js'
+      },
+      {
+        name: 'google',
+        url: 'https://apis.google.com/js/platform.js'
+      },
+      {
+        name: 'fontawesome',
+        url: 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css'
+      }
+    ])
   ]
 };

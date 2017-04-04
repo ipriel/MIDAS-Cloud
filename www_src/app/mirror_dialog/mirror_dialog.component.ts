@@ -5,7 +5,7 @@ import { MdDialogRef } from '@angular/material';
     templateUrl: './mirror_dialog.component.html'
 })
 export class MirrorDialogComponent {
-    mirror: any;
+    mirror: Mirror;
 
     constructor(public dialogRef: MdDialogRef<MirrorDialogComponent>) {
         this.mirror = {};
