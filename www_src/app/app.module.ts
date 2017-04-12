@@ -11,7 +11,7 @@ import { RouterStoreModule } from '@ngrx/router-store';
 
 import {
   AuthEffects, UserEffects, reducer, routes, resolvePipe,
-  FacebookService, INIT_PARAMS, fbParams,
+  AuthGuard, FacebookService, INIT_PARAMS, fbParams,
   GoogleService, GOOG_ID, googId
 } from './shared';
 
@@ -52,6 +52,7 @@ import { EditServiceDialogComponent } from './edit_service_dialog/edit_service_d
     resolvePipe
   ],
   providers: [
+    AuthGuard,
     FacebookService,
     { provide: INIT_PARAMS, useValue: fbParams },
     GoogleService,

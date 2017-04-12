@@ -3,33 +3,43 @@ import { type } from '../shared/util';
 import { State } from './user.store';
 
 export const ActionTypes = {
-  INIT: type('INIT'), //S
-  LOAD_DATA: type('LOAD_DATA'), //L
-  ADD_DEVICE: type('ADD_DEVICE'), //D
-  CONFIRM_PAIR: type('CONFIRM_PAIR'), //L
-  DEPAIR_DEVICE: type('DEPAIR_DEVICE'), //L
-  ADD_MIRROR: type('ADD_MIRROR'), //L
-  EDIT_MIRROR: type('EDIT_MIRROR'), //L
-  REM_MIRROR: type('REM_MIRROR'), //L
-  LINK_SVC: type('LINK_SVC'), //L
-  UNLINK_SVC: type('UNLINK_SVC'), //L
-  ADD_SVC: type('ADD_SVC'), //L
-  EDIT_SVC: type('EDIT_SVC'), //L
-  REM_SVC: type('REM_SVC'), //L
-  SVC_GET_TEMPLATE: type('SVC_GET_TEMPLATE'), //S
-  SVC_TYPE_CHANGED: type('SVC_TYPE_CHANGED') //L
+  INIT: type('[Server] INIT'),
+  LOAD_DATA: type('[Local] LOAD DATA'),
+  ADD_DEVICE: type('[Dev] ADD DEVICE'),
+  S_CONFIRM_PAIR: type('[Server] CONFIRM PAIR'),
+  L_CONFIRM_PAIR: type('[Local] CONFIRM PAIR'),
+  S_DEPAIR_DEVICE: type('[Server] DEPAIR DEVICE'),
+  L_DEPAIR_DEVICE: type('[Local] DEPAIR DEVICE'),
+  S_ADD_MIRROR: type('[Server] ADD MIRROR'),
+  L_ADD_MIRROR: type('[Local] ADD MIRROR'),
+  S_EDIT_MIRROR: type('[Server] EDIT MIRROR'),
+  L_EDIT_MIRROR: type('[Local] EDIT MIRROR'),
+  S_REM_MIRROR: type('[Server] REM MIRROR'),
+  L_REM_MIRROR: type('[Local] REM MIRROR'),
+  S_LINK_SVC: type('[Server] LINK SVC'),
+  L_LINK_SVC: type('[Local] LINK SVC'),
+  S_UNLINK_SVC: type('[Server] UNLINK SVC'),
+  L_UNLINK_SVC: type('[Local] UNLINK SVC'),
+  S_ADD_SVC: type('[Server] ADD SVC'),
+  L_ADD_SVC: type('[Local] ADD SVC'),
+  S_EDIT_SVC: type('[Server] EDIT SVC'),
+  L_EDIT_SVC: type('[Local] EDIT SVC'),
+  S_REM_SVC: type('[Server] REM SVC'),
+  L_REM_SVC: type('[Local] REM SVC'),
+  SVC_GET_TEMPLATE: type('[Server] SVC GET TEMPLATE'),
+  SVC_TYPE_CHANGED: type('[Local] SVC TYPE CHANGED')
 };
 
 export class InitAction implements Action {
   type = ActionTypes.INIT;
 
-  constructor(public payload: String) { }
+  constructor(public payload: ObjectId) { }
 }
 
 export class LoadDataAction implements Action {
   type = ActionTypes.LOAD_DATA;
 
-  constructor(public payload: State) { }
+  constructor(public payload: any) { }
 }
 
 export class AddDeviceAction implements Action {
@@ -38,62 +48,122 @@ export class AddDeviceAction implements Action {
   constructor(public payload: Device) { }
 }
 
-export class ConfirmPairAction implements Action {
-  type = ActionTypes.CONFIRM_PAIR;
+export class SConfirmPairAction implements Action {
+  type = ActionTypes.S_CONFIRM_PAIR;
 
-  constructor(public payload: any) { }
+  constructor(public payload: ObjectLink<String>) { }
 }
 
-export class DepairDeviceAction implements Action {
-  type = ActionTypes.DEPAIR_DEVICE;
+export class LConfirmPairAction implements Action {
+  type = ActionTypes.L_CONFIRM_PAIR;
 
-  constructor(public payload: any) { }
+  constructor(public payload: String) { }
 }
 
-export class AddMirrorAction implements Action {
-  type = ActionTypes.ADD_MIRROR;
+export class SDepairDeviceAction implements Action {
+  type = ActionTypes.S_DEPAIR_DEVICE;
+
+  constructor(public payload: ObjectLink<String>) { }
+}
+
+export class LDepairDeviceAction implements Action {
+  type = ActionTypes.L_DEPAIR_DEVICE;
+
+  constructor(public payload: String) { }
+}
+
+export class SAddMirrorAction implements Action {
+  type = ActionTypes.S_ADD_MIRROR;
+
+  constructor(public payload: ObjectLink<Mirror>) { }
+}
+
+export class LAddMirrorAction implements Action {
+  type = ActionTypes.L_ADD_MIRROR;
 
   constructor(public payload: Mirror) { }
 }
 
-export class EditMirrorAction implements Action {
-  type = ActionTypes.EDIT_MIRROR;
+export class SEditMirrorAction implements Action {
+  type = ActionTypes.S_EDIT_MIRROR;
+
+  constructor(public payload: ObjectLink<Mirror>) { }
+}
+
+export class LEditMirrorAction implements Action {
+  type = ActionTypes.L_EDIT_MIRROR;
 
   constructor(public payload: Mirror) { }
 }
 
-export class RemoveMirrorAction implements Action {
-  type = ActionTypes.REM_MIRROR;
+export class SRemoveMirrorAction implements Action {
+  type = ActionTypes.S_REM_MIRROR;
 
-  constructor(public payload: ObjectId) { }
+  constructor(public payload: ObjectLink<String>) { }
 }
 
-export class LinkServiceAction implements Action {
-  type = ActionTypes.LINK_SVC;
+export class LRemoveMirrorAction implements Action {
+  type = ActionTypes.L_REM_MIRROR;
 
-  constructor(public payload: ObjectLink) { }
+  constructor(public payload: String) { }
 }
 
-export class UnlinkServiceAction implements Action {
-  type = ActionTypes.UNLINK_SVC;
+export class SLinkServiceAction implements Action {
+  type = ActionTypes.S_LINK_SVC;
 
-  constructor(public payload: ObjectLink) { }
+  constructor(public payload: ObjectLink<ObjectId>) { }
 }
 
-export class AddServiceAction implements Action {
-  type = ActionTypes.ADD_SVC;
+export class LLinkServiceAction implements Action {
+  type = ActionTypes.L_LINK_SVC;
+
+  constructor(public payload: ObjectLink<ObjectId>) { }
+}
+
+export class SUnlinkServiceAction implements Action {
+  type = ActionTypes.S_UNLINK_SVC;
+
+  constructor(public payload: ObjectLink<ObjectId>) { }
+}
+
+export class LUnlinkServiceAction implements Action {
+  type = ActionTypes.L_UNLINK_SVC;
+
+  constructor(public payload: ObjectLink<ObjectId>) { }
+}
+
+export class SAddServiceAction implements Action {
+  type = ActionTypes.S_ADD_SVC;
+
+  constructor(public payload: ObjectLink<Service>) { }
+}
+
+export class LAddServiceAction implements Action {
+  type = ActionTypes.L_ADD_SVC;
 
   constructor(public payload: Service) { }
 }
 
-export class EditServiceAction implements Action {
-  type = ActionTypes.EDIT_SVC;
+export class SEditServiceAction implements Action {
+  type = ActionTypes.S_EDIT_SVC;
+
+  constructor(public payload: ObjectLink<Service>) { }
+}
+
+export class LEditServiceAction implements Action {
+  type = ActionTypes.L_EDIT_SVC;
 
   constructor(public payload: Service) { }
 }
 
-export class RemoveServiceAction implements Action {
-  type = ActionTypes.REM_SVC;
+export class SRemoveServiceAction implements Action {
+  type = ActionTypes.S_REM_SVC;
+
+  constructor(public payload: ObjectLink<ObjectId>) { }
+}
+
+export class LRemoveServiceAction implements Action {
+  type = ActionTypes.L_REM_SVC;
 
   constructor(public payload: ObjectId) { }
 }
@@ -107,7 +177,7 @@ export class ServiceGetTemplateAction implements Action {
 export class ServiceTypeChangedAction implements Action {
   type = ActionTypes.SVC_TYPE_CHANGED;
 
-  constructor(public payload: Array<Setting>) { }
+  constructor(public payload: ServiceTemplate) { }
 }
 
 /**
@@ -117,13 +187,26 @@ export class ServiceTypeChangedAction implements Action {
 export type Actions = 
   InitAction |
   LoadDataAction |
-  ConfirmPairAction |
-  DepairDeviceAction |
-  AddMirrorAction |
-  EditMirrorAction |
-  RemoveMirrorAction |
-  AddServiceAction |
-  EditServiceAction |
-  RemoveServiceAction |
+  AddDeviceAction |
+  SConfirmPairAction |
+  LConfirmPairAction |
+  SDepairDeviceAction |
+  LDepairDeviceAction |
+  SAddMirrorAction |
+  LAddMirrorAction |
+  SEditMirrorAction |
+  LEditMirrorAction |
+  SRemoveMirrorAction |
+  LRemoveMirrorAction |
+  SLinkServiceAction |
+  LLinkServiceAction | 
+  SUnlinkServiceAction |
+  LUnlinkServiceAction |
+  SAddServiceAction |
+  LAddServiceAction |
+  SEditServiceAction |
+  LEditServiceAction |
+  SRemoveServiceAction |
+  LRemoveServiceAction |
   ServiceGetTemplateAction |
   ServiceTypeChangedAction;

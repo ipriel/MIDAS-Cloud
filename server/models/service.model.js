@@ -4,6 +4,7 @@ var Schema = mongoose.Schema;
 var serviceSchema = new Schema({
   name: String,
   type: String,
+  authorized: { type: Boolean, default: false },
   settings: [{
     name: String,
     val: Schema.Types.Mixed,

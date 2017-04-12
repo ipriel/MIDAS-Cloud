@@ -54,7 +54,7 @@ export class DetailsComponent {
     }
 
     goBack() {
-        this.store$.dispatch(go("main"));
+        this.store$.dispatch(go("/main"));
     }
 
     ngOnInit() {

@@ -18,6 +18,7 @@ export class GoogleService {
     public initCustomLogin(buttonID: string, onSuccess: LoginSuccessCallback, onFailure: FailureCallback) {
         var btn = document.getElementById(buttonID);
         this.auth2.attachClickHandler(btn, {}, onSuccess, onFailure);
+        console.log("hello");
     }
 
     public initLogin(buttonID: string, onSuccess: LoginSuccessCallback, onFailure: FailureCallback) {
@@ -35,10 +36,10 @@ export class GoogleService {
     }
 
     public signin(options?: SignInOptions) {
-        return this.auth2.signin(options);
+        return this.auth2.signIn(options);
     }
 
     public signout() {
-        return this.auth2.signout();
+        return this.auth2.signOut();
     }
 }

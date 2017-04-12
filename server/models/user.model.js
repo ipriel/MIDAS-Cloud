@@ -2,13 +2,24 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
 var userSchema = new Schema({
-  auth_id: { kind: String, value: String },
-  mirrors: [{ type: Schema.Types.ObjectId, ref: 'Mirror' }],
+  name: String,
+  auth_id: {
+    kind: String,
+    value: String
+  },
+  authorized: [{
+    kind: String,
+    status: { type: Boolean, default: false }
+  }],
+  mirrors: [{
+    sn: String,
+    name: String,
+    services: [{ type: Schema.Types.ObjectId, ref: 'Service' }]
+  }],
   devices: [{
-    _id: String,
     mac: String,
     name: String,
-    paired: Boolean
+    paired: { type: Boolean, default: false }
   }],
   services: [{ type: Schema.Types.ObjectId, ref: 'Service' }]
 });

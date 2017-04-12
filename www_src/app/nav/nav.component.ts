@@ -20,6 +20,5 @@ export class NavComponent {
 
     logout() {
         this.store$.dispatch({type: AuthActions.LOGOUT});
-        this.store$.dispatch(go(""));
     }
 }

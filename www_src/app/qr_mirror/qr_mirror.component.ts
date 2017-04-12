@@ -22,7 +22,7 @@ export class QRMirrorComponent {
     }
 
     goBack() {
-        this.store$.dispatch(go("main"));
+        this.store$.dispatch(go("/main"));
     }
 
     saveMirror() {

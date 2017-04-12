@@ -70,8 +70,8 @@ declare namespace gapi {
         interface GoogleAuth {
             then: (onInit: () => void) => Promise<any>;
             isSignedIn: watcher<boolean>;
-            signin: (options?: SignInOptions) => Promise<any>;
-            signout: () => Promise<any>;
+            signIn: (options?: SignInOptions) => Promise<any>;
+            signOut: () => Promise<any>;
             disconnect: () => void;
             grantOfflineAccess: (options: { scope: string; redirect_uri: string; }) => Promise<any | { code: string }>
             attachClickHandler: (container: string | HTMLElement, options: SignInOptions, onSuccess: LoginSuccessCallback, onFailure: FailureCallback) => void;

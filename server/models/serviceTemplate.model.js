@@ -3,6 +3,8 @@ var Schema = mongoose.Schema;
 
 var serviceTemplateSchema = new Schema({
   type: String,
+  description: String,
+  auth_url: String,
   settings: [{
     name: String,
     val: Schema.Types.Mixed,

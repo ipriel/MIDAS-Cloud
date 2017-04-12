@@ -29,18 +29,18 @@ export class MainComponent {
         this.devices = store$.select(state => state.user.devices);
         this.services = store$.select(state => state.user.services);
         //Dev
-        store$.dispatch({type: UserActions.ADD_MIRROR, payload: { name: "Bathroom", _id: "0032A" }});
-        store$.dispatch({type: UserActions.ADD_MIRROR, payload: { name: "Hall", _id: "0468A" }});
+        store$.dispatch({type: UserActions.S_ADD_MIRROR, payload: { name: "Bathroom", _id: "0032A" }});
+        store$.dispatch({type: UserActions.S_ADD_MIRROR, payload: { name: "Hall", _id: "0468A" }});
         store$.dispatch({type: UserActions.ADD_DEVICE, payload: { _id: 8, name: "Itamar's Phone", paired: false }});
         store$.dispatch({type: UserActions.ADD_DEVICE, payload: { _id: 9, name: "Itamar's Tablet", paired: false }});
     }
 
     pairDevice(device: Device) {
-        this.store$.dispatch({type: UserActions.CONFIRM_PAIR, payload: device._id});
+        this.store$.dispatch({type: UserActions.S_CONFIRM_PAIR, payload: device._id});
     }
 
     depairDevice(device: Device) {
-        this.store$.dispatch({type: UserActions.DEPAIR_DEVICE, payload: device._id});
+        this.store$.dispatch({type: UserActions.S_DEPAIR_DEVICE, payload: device._id});
     }
 
     addMirror() {
@@ -50,14 +50,14 @@ export class MainComponent {
 
         this.mirrorDialogRef.afterClosed().subscribe(result => {
             if (typeof result !== "undefined") {
-                this.store$.dispatch({type: UserActions.ADD_MIRROR, payload: result});
+                this.store$.dispatch({type: UserActions.S_ADD_MIRROR, payload: result});
             }
             this.mirrorDialogRef = null;
         });
     }
 
     editMirror(mirror: Mirror) {
-        this.store$.dispatch(go("details/" + mirror._id));
+        this.store$.dispatch(go("/details/" + mirror._id));
     }
 
     removeMirror(mirror: Mirror) {
@@ -68,7 +68,7 @@ export class MainComponent {
 
         this.confirmDialogRef.afterClosed().subscribe(result => {
             if (result) {
-                this.store$.dispatch({type: UserActions.REM_MIRROR, payload: mirror._id});
+                this.store$.dispatch({type: UserActions.S_REM_MIRROR, payload: mirror._id});
             }
             this.confirmDialogRef = null;
         });
@@ -81,7 +81,7 @@ export class MainComponent {
 
         this.newServiceDialogRef.afterClosed().subscribe(result => {
             if (typeof result !== "undefined") {
-                this.store$.dispatch({type: UserActions.ADD_SVC, payload: result});
+                this.store$.dispatch({type: UserActions.S_ADD_SVC, payload: result});
             }
             this.newServiceDialogRef = null;
         });
@@ -95,7 +95,7 @@ export class MainComponent {
 
         this.editServiceDialogRef.afterClosed().subscribe(result => {
             if (typeof result !== "undefined") {
-                this.store$.dispatch({type: UserActions.EDIT_SVC, payload: result});
+                this.store$.dispatch({type: UserActions.S_EDIT_SVC, payload: result});
             }
             this.editServiceDialogRef = null;
         });
@@ -109,7 +109,7 @@ export class MainComponent {
 
         this.confirmDialogRef.afterClosed().subscribe(result => {
             if (result) {
-                this.store$.dispatch({type: UserActions.REM_SVC, payload: service._id});
+                this.store$.dispatch({type: UserActions.S_REM_SVC, payload: service._id});
             }
             this.confirmDialogRef = null;
         });
