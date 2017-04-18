@@ -47,10 +47,6 @@ router.get('/weather', /*midas.authenticate,*/ function (req, res) {
         //the whole response has been recieved, so we just print it out here
         response.on('end', function () {
             let data = JSON.parse(str);
-            console.log("=+=");
-            console.log(data.main.temp);
-            console.log("=+=");
-            //data.main.temp = kelvinToCelsius(current.temperature());
 
             res.json(data.main.temp);
         });
@@ -62,8 +58,11 @@ router.get('/weather', /*midas.authenticate,*/ function (req, res) {
 router.get('/rss', /*midas.authenticate,*/ function (req, res) {
     rss.load(req.query.url, function (err, rss) {
         if (err) handleError(err);
-
-        res.json(rss);
+        let data = {num_items: rss.items.length, items: []};
+        rss.items.forEach(function(item) {
+            data.items.push({title: item.title, description: item.description.substring(0,item.description.indexOf('<div class=\"feedflare\">'))});
+        });
+        res.json(data);
     });
 });
 
@@ -72,7 +71,8 @@ router.get('/google/calendar', /*midas.authenticate, google.getToken,*/ function
         return setting.name === "calendars";
     }).val;
     next();*/
-    res.json({ events: ["8:30 - Meeting with Mark", "13:30 - Lunch meeting with Susan @ Arcaffe", "15:00 - Sprint Meeting with Dev Team", "21:00 - Fiddler on the Roof @ Cameri Theatre"] })
+    let calEvents = ["8:30 - Meeting with Mark", "13:30 - Lunch meeting with Susan @ Arcaffe", "15:00 - Sprint Meeting with Dev Team", "21:00 - Fiddler on the Roof @ Cameri Theatre"];
+    res.json({ num_items: calEvents.length, items: calEvents });
 });/*, google.getEvents, function (req, res) {
     res.send(req.body.events);
 });*/
