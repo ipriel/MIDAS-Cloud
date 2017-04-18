@@ -1,6 +1,7 @@
 var router = require('express').Router();
+var google = require('../services/google');
 var model = require('../models/serviceTemplate.model');
-var handleError = require('./utils');
+var handleError = require('../lib/utils');
 
 router.get('/types', function (req, res) {
     /*res.json([{ name: "rss", description: "RSS feed" },
@@ -38,6 +39,10 @@ router.get('/mirror/:sn/profiles', function (req, res) {
 
             res.JSON(users);
         });
+});
+
+router.get('/google/:userId/calendar/list', google.getToken, google.getCalendars, function (req, res) {
+    res.json(req.body.calendarList);
 });
 
 module.exports = router;

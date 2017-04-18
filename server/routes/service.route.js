@@ -6,9 +6,9 @@ var google = require('../services/google');
 var midas = require('../services/midas');
 var Mirror = require('../models/mirror.model');
 var User = require('../models/user.model');
-var handleError = require('./utils');
+var handleError = require('../lib/utils');
 
-function filterGCals(req, res, next) {
+/*function filterGCals(req, res, next) {
     var service = req.body.mirror.services.filter(function (service) {
         return service.type = "google/calendar";
     });
@@ -30,31 +30,37 @@ function filterGCals(req, res, next) {
     } else {
         handleError("Service \"google/calendar\" not configured for " + req.body.mirror.name);
     }
-};
+};*/
 
-router.get('/weather/:location', function (req, res) {
-    weather.getCurrent(req.params.location, function (current) {
+router.post('/weather', /*midas.authenticate*/, function (req, res) {
+    weather.getCurrent(req.query.location, function (current) {
         let data = current.list[0];
         data.main.temp = weather.kelvinToCelsius(current.temperature());
 
-        res.json(data);
+        res.json(data.main.temp);
     });
 });
 
-router.post('/rss', midas.authenticate, function (req, res) {
-    rss.load(req.body.url, function (err, rss) {
+router.post('/rss', /*midas.authenticate*/, function (req, res) {
+    rss.load(req.query.url, function (err, rss) {
         if (err) handleError(err);
 
-        res.json(rss.items);
+        res.json(rss);
     });
 });
 
-router.get('/google/:userId/calendar/list', google.getToken, google.getCalendars, function (req, res) {
-    res.json(req.body.calendarList);
-});
-
-router.post('/google/calendar/events', midas.authenticate, google.getToken, google.getCalendars, filterGCals, google.getEvents, function (req, res) {
+router.post('/google/calendar', /*midas.authenticate, google.getToken,*/ function (req, res, next) {
+    /*req.body.calendars = service.settings.find(function(setting) {
+        return setting.name === "calendars";
+    }).val;
+    next();*/
+    res.json({events: ["8:30 - Meeting with Mark", "13:30 - Lunch meeting with Susan @ Arcaffe", "15:00 - Sprint Meeting with Dev Team", "21:00 - Fiddler on the Roof @ Cameri Theatre"]})
+});/*, google.getEvents, function (req, res) {
     res.send(req.body.events);
-});
+});*/
+
+/*router.post('/google/calendar', midas.authenticate, google.getToken, google.getCalendars, filterGCals, google.getEvents, function (req, res) {
+    res.send(req.body.events);
+});*/
 
 module.exports = router;

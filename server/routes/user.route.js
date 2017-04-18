@@ -1,7 +1,7 @@
 var router = require('express').Router();
 var User = require('../models/user.model');
 var Service = require('../models/service.model');
-var handleError = require('./utils');
+var handleError = require('../lib/utils');
 
 router.get('/:id', function (req, res) {
     User.findById(req.params.id)

@@ -2,6 +2,7 @@ var fs = require('fs');
 var googleAuth = require('google-auth-library');
 var google = require('googleapis');
 var gcal = google.calendar('v3');
+var handleError = require('../lib/utils');
 
 var TOKEN_DIR = (process.env.HOME || process.env.HOMEPATH ||
     process.env.USERPROFILE) + '/.credentials/';
@@ -16,13 +17,15 @@ function storeToken(token, userId) {
     try {
         fs.mkdirSync(TOKEN_DIR);
     } catch (err) {
-        if (err.code != 'EEXIST') {
-            throw err;
-        }
+        if (err.code != 'EEXIST') throw err;
     }
 
     fs.writeFile(path, JSON.stringify(token));
     console.log('Token stored to ' + path);
+};
+
+Array.prototype.pushAll = function(arr) {
+    this.push.apply(this, arr);
 };
 
 module.exports = {
@@ -34,7 +37,7 @@ module.exports = {
 
         fs.readFile(TOKEN_DIR + userId + ".g.json", function (err, tokens) {
             if (err) {
-                res.status(401).send(err);
+                handleError(err, 401);
             } else {
                 oauth2Client.setCredentials(tokens);
                 req.body.oauth2Client = oauth2Client;
@@ -64,7 +67,7 @@ module.exports = {
 
         oauth2Client.getToken(req.params.code, function (err, tokens) {
             if (err) {
-                res.status(500).send(err);
+                handleError(err, 500);
             } else {
                 oauth2Client.setCredentials(tokens);
                 storeToken(tokens, req.params.userId);
@@ -75,10 +78,7 @@ module.exports = {
 
     getCalendars: function (req, res, next) {
         gcal.calendarList.list({ auth: req.body.oauth2Client }, function (err, response) {
-            if (err) {
-                console.error(err);
-                res.status(400).send(err);
-            }
+            if (err) handleError(err);
 
             req.body.calendarList = response.items;
             next();
@@ -91,21 +91,29 @@ module.exports = {
 
         req.body.calendars.forEach(function (calendar) {
             calendar.events.list({
-                auth: auth,
-                calendarId: calendar.id,
+                auth: req.body.oauth2Client,
+                calendarId: calendar,
                 timeMin: new Date().toISOString(),
                 timeMax: midnight.toISOString(),
                 singleEvents: true,
                 orderBy: 'startTime'
             }, function (err, respone) {
-                if (err) {
-                    console.error(err);
-                    res.status(400).send(err);
-                }
+                if (err) handleError(err);
 
-                req.body.events = response.items;
-                next();
+                req.body.events.pushAll(response.items);
             });
         });
+
+        req.body.events.sort(function (a, b) {
+            if (a.originalStartTime.dateTime < b.originalStartTime.dateTime) {
+              return -1;
+            }
+            if (a.originalStartTime.dateTime > b.originalStartTime.dateTime) {
+              return 1;
+            }
+            // a.originalStartTime.dateTime = b.originalStartTime.dateTime
+            return 0;
+        });
+        next();
     }
 };
