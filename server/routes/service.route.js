@@ -1,6 +1,5 @@
 var router = require('express').Router();
-var weather = require('weather.js');
-weather.setApiKey('ca2dfe6e258d29f79683fe6a0d2aa183');
+var http = require('http');
 var rss = require('rss-to-json');
 var google = require('../services/google');
 var midas = require('../services/midas');
@@ -32,12 +31,32 @@ var handleError = require('../lib/utils');
 };*/
 
 router.get('/weather', /*midas.authenticate,*/ function (req, res) {
-    weather.getCurrent(req.query.location, function (current) {
-        let data = current.list[0];
-        data.main.temp = weather.kelvinToCelsius(current.temperature());
+    var options = {
+        host: 'api.openweathermap.org',
+        path: '/data/2.5/weather?q='+ encodeURIComponent(req.query.location) +'&cnt=1&units=metric&APPID=ca2dfe6e258d29f79683fe6a0d2aa183'
+    };
 
-        res.json(data.main.temp);
-    });
+    callback = function (response) {
+        var str = '';
+
+        //another chunk of data has been recieved, so append it to `str`
+        response.on('data', function (chunk) {
+            str += chunk;
+        });
+
+        //the whole response has been recieved, so we just print it out here
+        response.on('end', function () {
+            let data = JSON.parse(str);
+            console.log("=+=");
+            console.log(data.main.temp);
+            console.log("=+=");
+            //data.main.temp = kelvinToCelsius(current.temperature());
+
+            res.json(data.main.temp);
+        });
+    }
+
+    http.request(options, callback).end();
 });
 
 router.get('/rss', /*midas.authenticate,*/ function (req, res) {
@@ -53,7 +72,7 @@ router.get('/google/calendar', /*midas.authenticate, google.getToken,*/ function
         return setting.name === "calendars";
     }).val;
     next();*/
-    res.json({events: ["8:30 - Meeting with Mark", "13:30 - Lunch meeting with Susan @ Arcaffe", "15:00 - Sprint Meeting with Dev Team", "21:00 - Fiddler on the Roof @ Cameri Theatre"]})
+    res.json({ events: ["8:30 - Meeting with Mark", "13:30 - Lunch meeting with Susan @ Arcaffe", "15:00 - Sprint Meeting with Dev Team", "21:00 - Fiddler on the Roof @ Cameri Theatre"] })
 });/*, google.getEvents, function (req, res) {
     res.send(req.body.events);
 });*/
