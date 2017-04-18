@@ -32,7 +32,7 @@ var handleError = require('../lib/utils');
     }
 };*/
 
-router.post('/weather', /*midas.authenticate*/, function (req, res) {
+router.get('/weather', /*midas.authenticate*/, function (req, res) {
     weather.getCurrent(req.query.location, function (current) {
         let data = current.list[0];
         data.main.temp = weather.kelvinToCelsius(current.temperature());
@@ -41,7 +41,7 @@ router.post('/weather', /*midas.authenticate*/, function (req, res) {
     });
 });
 
-router.post('/rss', /*midas.authenticate*/, function (req, res) {
+router.get('/rss', /*midas.authenticate*/, function (req, res) {
     rss.load(req.query.url, function (err, rss) {
         if (err) handleError(err);
 
@@ -49,7 +49,7 @@ router.post('/rss', /*midas.authenticate*/, function (req, res) {
     });
 });
 
-router.post('/google/calendar', /*midas.authenticate, google.getToken,*/ function (req, res, next) {
+router.get('/google/calendar', /*midas.authenticate, google.getToken,*/ function (req, res, next) {
     /*req.body.calendars = service.settings.find(function(setting) {
         return setting.name === "calendars";
     }).val;
