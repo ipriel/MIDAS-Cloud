@@ -4,7 +4,6 @@ weather.setApiKey('ca2dfe6e258d29f79683fe6a0d2aa183');
 var rss = require('rss-to-json');
 var google = require('../services/google');
 var midas = require('../services/midas');
-var Mirror = require('../models/mirror.model');
 var User = require('../models/user.model');
 var handleError = require('../lib/utils');
 
