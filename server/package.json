@@ -10,7 +10,7 @@
     "facebook-node-sdk": "^0.2.0",
     "fs": "0.0.1-security",
     "google-auth-library": "^0.10.0",
-    "googleapis": "^19.0.0",
+    "googleapis": "^59.0.0",
     "mongoose": "^4.7.6",
     "rss-to-json": "^1.0.2"
   }
